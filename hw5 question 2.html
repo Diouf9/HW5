@@ -1,0 +1,30 @@
+library("mapdata")
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(dplyr)
+
+#part2a
+states <- map_data("state")
+head(states)
+ca_df <- states %>%
+  filter(region == "california")
+
+head(ca_df)
+
+#part 2b
+load("./wind_turbines.rda")
+head(wind_turbines)
+wind_turbines %>%   
+  filter(t_state %in% c("CA"))
+wind_ca <- wind_turbines %>%
+  filter(t_state == "CA")
+head(wind_ca)
+
+#part2c
+ggplot(data = west_coast) + 
+  geom_polygon(aes(x = long, y = lat), fill = "lightblue", color = "black") +
+
+#part2d
+  geom_point(data = wind_ca, aes(x = xlong, y = ylat, fill = "black", alpha = 0.5), size = 5, shape = 16) +
+  guides(fill=FALSE, alpha=FALSE, size=FALSE)
